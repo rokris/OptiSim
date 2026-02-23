@@ -17,6 +17,7 @@
 		B0000008 /* SynsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000008 /* SynsViewModel.swift */; };
 		B0000009 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0000009 /* Assets.xcassets */; };
 		B000000A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A000000A /* Preview Assets.xcassets */; };
+		B000000B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000C /* Theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		A0000009 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A000000A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A000000B /* Synstest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Synstest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A000000C /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				A0000004 /* MonovisionToggleView.swift */,
 				A0000005 /* ResultsTableView.swift */,
 				A0000006 /* DefocusChartView.swift */,
+				A000000C /* Theme.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -191,6 +194,7 @@
 				B0000006 /* DefocusChartView.swift in Sources */,
 				B0000007 /* EyeModel.swift in Sources */,
 				B0000008 /* SynsViewModel.swift in Sources */,
+				B000000B /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

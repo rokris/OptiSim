@@ -6,73 +6,318 @@
 <title>OptiSim – Rest-defokus & Monovision/Presbyond</title>
 <style>
   :root {
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    --color-right: #0a7;
-    --color-left: #c22;
-    --color-right-bg: rgba(0, 170, 119, 0.08);
-    --color-left-bg: rgba(204, 34, 34, 0.08);
+    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    --bg-main: #050505;
+    --bg-card: rgba(15, 23, 42, 0.7);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: rgba(51, 65, 85, 0.5);
+    --accent: #00f2fe;
+    --accent-glow: rgba(0, 242, 254, 0.8);
+    --color-right: #00e5ff;
+    --color-left: #ff00ea;
+    --color-right-bg: rgba(0, 229, 255, 0.05);
+    --color-left-bg: rgba(255, 0, 234, 0.05);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.05);
+    
+    --heading-color: #fff;
+    --heading-grad: linear-gradient(90deg, #fff, #94a3b8);
+    --card-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    --canvas-bg: rgba(0,0,0,0.3);
+    --canvas-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+    --pill-bg: rgba(0,0,0,0.3);
+    --pill-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+    --input-bg: rgba(0,0,0,0.4);
+    --input-focus-bg: rgba(0,0,0,0.6);
+    --table-header-bg: rgba(0,0,0,0.4);
+    --checkbox-bg: rgba(0,0,0,0.5);
+    --checkbox-border: rgba(255,255,255,0.2);
+    --checkbox-check: #000;
+    --bg-grad-1: rgba(0, 229, 255, 0.08);
+    --bg-grad-2: rgba(255, 0, 234, 0.08);
+    --color-positive: #00e676;
+    --color-positive-glow: rgba(0, 230, 118, 0.5);
+    --color-negative: #ff1744;
+    --color-negative-glow: rgba(255, 23, 68, 0.5);
+    --slider-track: rgba(255,255,255,0.1);
+    --slider-thumb: #fff;
+    --slider-thumb-shadow: inset 0 0 4px rgba(0,0,0,0.5);
+    --tick-line: #475569;
+    --tick-zero: #fff;
+    --tick-zero-shadow: 0 0 8px rgba(255,255,255,0.6);
+    --shadow-right: rgba(0, 229, 255, 0.5);
+    --shadow-left: rgba(255, 0, 234, 0.5);
+    --card-grad-right: linear-gradient(135deg, rgba(0, 229, 255, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%);
+    --card-grad-left: linear-gradient(135deg, rgba(255, 0, 234, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%);
+    --note-bg: rgba(0, 242, 254, 0.03);
+    --note-border: rgba(0, 242, 254, 0.15);
+    --note-shadow: 0 4px 20px rgba(0, 242, 254, 0.05);
+    --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
   }
-  body { margin:0; padding:20px; background:#f8f9fa; color:#111; }
+
+  [data-theme="light"] {
+    --bg-main: #f1f5f9;
+    --bg-card: rgba(255, 255, 255, 0.8);
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --border-color: rgba(15, 23, 42, 0.1);
+    --accent: #0284c7;
+    --accent-glow: rgba(2, 132, 199, 0.3);
+    --color-right: #0284c7;
+    --color-left: #c026d3;
+    --color-right-bg: rgba(2, 132, 199, 0.05);
+    --color-left-bg: rgba(192, 38, 211, 0.05);
+    --glass-border: 1px solid rgba(0, 0, 0, 0.05);
+    
+    --heading-color: #0f172a;
+    --heading-grad: linear-gradient(90deg, #0f172a, #475569);
+    --card-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    --canvas-bg: rgba(255,255,255,0.6);
+    --canvas-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+    --pill-bg: rgba(255,255,255,0.8);
+    --pill-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    --input-bg: rgba(255,255,255,0.8);
+    --input-focus-bg: #fff;
+    --table-header-bg: rgba(0,0,0,0.05);
+    --checkbox-bg: rgba(255,255,255,0.8);
+    --checkbox-border: rgba(0,0,0,0.2);
+    --checkbox-check: #fff;
+    --bg-grad-1: rgba(2, 132, 199, 0.05);
+    --bg-grad-2: rgba(192, 38, 211, 0.05);
+    --color-positive: #16a34a;
+    --color-positive-glow: rgba(22, 163, 74, 0.2);
+    --color-negative: #dc2626;
+    --color-negative-glow: rgba(220, 38, 38, 0.2);
+    --slider-track: rgba(0,0,0,0.1);
+    --slider-thumb: #fff;
+    --slider-thumb-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+    --tick-line: #cbd5e1;
+    --tick-zero: #0f172a;
+    --tick-zero-shadow: none;
+    --shadow-right: rgba(2, 132, 199, 0.2);
+    --shadow-left: rgba(192, 38, 211, 0.2);
+    --card-grad-right: linear-gradient(135deg, rgba(2, 132, 199, 0.08) 0%, rgba(255, 255, 255, 0.4) 100%);
+    --card-grad-left: linear-gradient(135deg, rgba(192, 38, 211, 0.08) 0%, rgba(255, 255, 255, 0.4) 100%);
+    --note-bg: rgba(2, 132, 199, 0.05);
+    --note-border: rgba(2, 132, 199, 0.2);
+    --note-shadow: 0 4px 20px rgba(2, 132, 199, 0.05);
+    --select-arrow: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%230f172a%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  }
+  
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  body { 
+    margin:0; 
+    padding:20px; 
+    background-color: var(--bg-main);
+    background-image: 
+      radial-gradient(circle at 15% 50%, var(--bg-grad-1), transparent 25%),
+      radial-gradient(circle at 85% 30%, var(--bg-grad-2), transparent 25%);
+    background-attachment: fixed;
+    color: var(--text-main); 
+    min-height: 100vh; 
+  }
   .wrap { max-width: 1200px; margin: 0 auto; }
-  h1 { font-size: 24px; margin: 0 0 8px; font-weight: 600; color:#1a1a1a; }
-  h2 { font-size: 16px; margin: 20px 0 10px; font-weight: 600; color:#333; }
-  h3 { font-size: 14px; margin: 0 0 8px; font-weight: 600; color:#444; }
-  .intro { font-size: 14px; color:#555; margin: 0 0 20px; line-height: 1.6; background:#fff; padding:16px; border-radius:12px; border:1px solid #e0e0e0; }
-  .intro strong { color:#333; }
-  .card { border:1px solid #e0e0e0; border-radius:12px; padding:18px; margin: 14px 0; background:#fff; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-  .row { display:grid; grid-template-columns: 1fr; gap:16px; }
-  @media (min-width: 980px) { .row { grid-template-columns: 1.15fr 1fr; } }
-  .mono { font-variant-numeric: tabular-nums; }
-  label { font-size:13px; display:block; margin-bottom:8px; color:#333; font-weight: 500; }
-  input[type=range] { width:100%; height:6px; accent-color:#0066cc; margin-bottom:0; }
-  .slider-ticks { position:relative; width:100%; height:22px; margin-top:-2px; padding:0 6px 0 9px; box-sizing:border-box; }
+  
+  .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .theme-toggle { background: var(--bg-card); border: var(--glass-border); color: var(--text-main); padding: 8px 12px; border-radius: 20px; cursor: pointer; font-size: 16px; transition: all 0.2s; box-shadow: var(--card-shadow); }
+  .theme-toggle:hover { transform: scale(1.05); }
+
+  h1 { 
+    font-size: 32px; 
+    margin: 0; 
+    font-weight: 800; 
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: -0.5px; 
+  }
+  h1 .title-text {
+    background: var(--heading-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  h2 { font-size: 18px; margin: 24px 0 12px; font-weight: 700; color: var(--heading-color); letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
+  h3 { font-size: 15px; margin: 0 0 10px; font-weight: 600; color: var(--heading-color); }
+  
+  .intro { 
+    font-size: 15px; 
+    color: var(--text-muted); 
+    margin: 0 0 24px; 
+    line-height: 1.7; 
+    background: var(--bg-card); 
+    padding: 20px; 
+    border-radius: 16px; 
+    border: var(--glass-border); 
+    box-shadow: var(--card-shadow); 
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .intro strong { color: var(--heading-color); font-weight: 600; }
+  
+  .card { 
+    border: var(--glass-border); 
+    border-radius: 16px; 
+    padding: 24px; 
+    margin: 16px 0; 
+    background: var(--bg-card); 
+    box-shadow: var(--card-shadow); 
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px);
+  }
+  
+  .row { display:grid; grid-template-columns: 1fr; gap:24px; }
+  @media (min-width: 980px) { .row { grid-template-columns: 1.2fr 1fr; } }
+  
+  .mono { font-variant-numeric: tabular-nums; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  label { font-size:14px; display:block; margin-bottom:10px; color: var(--text-main); font-weight: 500; }
+  
+  /* Futuristic Range Slider */
+  input[type=range] { -webkit-appearance: none; width:100%; height:4px; background: transparent; margin-bottom:0; }
+  input[type=range]:focus { outline: none; }
+  input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: var(--slider-track); border-radius: 2px; }
+  input[type=range]::-webkit-slider-thumb { height: 18px; width: 18px; border-radius: 50%; background: var(--slider-thumb); cursor: pointer; -webkit-appearance: none; margin-top: -7px; box-shadow: 0 0 15px var(--accent-glow), var(--slider-thumb-shadow); border: 2px solid var(--accent); transition: transform 0.1s; }
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+  input[type=range]::-moz-range-track { width: 100%; height: 4px; cursor: pointer; background: var(--slider-track); border-radius: 2px; }
+  input[type=range]::-moz-range-thumb { height: 18px; width: 18px; border-radius: 50%; background: var(--slider-thumb); cursor: pointer; box-shadow: 0 0 15px var(--accent-glow), var(--slider-thumb-shadow); border: 2px solid var(--accent); transition: transform 0.1s; }
+  input[type=range]::-moz-range-thumb:hover { transform: scale(1.2); }
+  
+  .slider-ticks { position:relative; width:100%; height:22px; margin-top:2px; padding:0 9px; box-sizing:border-box; }
   .slider-ticks .tick-line { width:100%; height:12px; }
   .slider-ticks .tick-line svg { width:100%; height:100%; overflow:visible; }
-  .slider-ticks .tick-labels { display:flex; justify-content:space-between; margin-top:2px; margin-left:-2.5px; margin-right:3px; }
-  .slider-ticks .tick-labels span { font-size:9px; color:#999; font-variant-numeric:tabular-nums; text-align:center; width:0; overflow:visible; white-space:nowrap; }
-  .slider-ticks .tick-labels span.zero { color:#333; font-weight:600; }
-  .pill { border:1px solid #d0d0d0; padding:3px 10px; border-radius:999px; font-size:13px; display:inline-block; background:#f5f5f5; font-weight:600; }
-  .note { background:#f0f7ff; border:1px solid #b3d9ff; border-radius:10px; padding:12px; margin:10px 0; }
-  .hint { font-size: 13px; color:#555; line-height: 1.6; }
-  .help { font-size: 12px; color:#777; margin-top:4px; font-style:italic; }
-  table { width:100%; border-collapse:collapse; margin-top:12px; }
-  th, td { padding:10px 8px; border-bottom:1px solid #e8e8e8; font-size:13px; text-align:left; vertical-align: top; }
-  th { font-size:12px; color:#666; font-weight:600; background:#f8f8f8; text-transform:uppercase; letter-spacing:0.3px; }
-  tbody tr:hover { background:#fafafa; }
+  .slider-ticks .tick-labels { display:flex; justify-content:space-between; margin-top:4px; margin-left:-4px; margin-right:4px; }
+  .slider-ticks .tick-labels span { font-size:10px; color: var(--text-muted); font-variant-numeric:tabular-nums; text-align:center; width:0; overflow:visible; white-space:nowrap; font-weight: 500; }
+  .slider-ticks .tick-labels span.zero { color: var(--tick-zero); font-weight:700; text-shadow: var(--tick-zero-shadow); }
+  
+  .pill { border: 1px solid rgba(255,255,255,0.1); padding:4px 12px; border-radius:6px; font-size:13px; display:inline-block; background: var(--pill-bg); font-weight:600; color: var(--accent); box-shadow: var(--pill-shadow); letter-spacing: 0.5px; }
+  
+  .note { background: var(--note-bg); border: 1px solid var(--note-border); border-radius:12px; padding:16px; margin:12px 0; box-shadow: var(--note-shadow); position: relative; overflow: hidden; }
+  .note::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+  .hint { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+  .help { font-size: 12px; color: #64748b; margin-top:6px; font-style:italic; }
+  
+  table { width:100%; border-collapse: separate; border-spacing: 0; margin-top:16px; border-radius: 12px; overflow: hidden; border: var(--glass-border); }
+  th, td { padding:14px 12px; font-size:14px; text-align:left; vertical-align: middle; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  th { font-size:12px; color: #94a3b8; font-weight:600; background: var(--table-header-bg); text-transform:uppercase; letter-spacing:1px; }
+  tbody tr { background: rgba(255,255,255,0.01); transition: background 0.2s; }
+  tbody tr:hover { background: rgba(255,255,255,0.05); }
+  tbody tr:last-child td { border-bottom: none; }
+  
   .good { font-weight: 700; }
   .small { font-size:12px; color:#666; margin-top:3px; line-height:1.3; }
-  canvas { width:100%; height:180px; border:1px solid #e0e0e0; border-radius:10px; background:#fff; }
-  .chart-stack { display:grid; grid-template-columns: 1fr; gap:12px; }
-  .controls { display:grid; gap: 14px; }
-  .toggleRow { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
-  .smallInput { width: 170px; padding: 7px 10px; border:1px solid #d0d0d0; border-radius:8px; font-size:13px; }
-  .badge { background:#e8f4f8; border:1px solid #b8dce8; border-radius:10px; padding:10px; font-size:13px; }
-  .section-title { font-size:15px; font-weight:600; color:#444; margin:0 0 12px; padding-bottom:8px; border-bottom:2px solid #e0e0e0; }
-  .eye-card { border:1px solid #e0e0e0; border-radius:10px; padding:14px; }
-  .eye-card.right { border-left: 3px solid var(--color-right); background: var(--color-right-bg); }
-  .eye-card.left { border-left: 3px solid var(--color-left); background: var(--color-left-bg); }
-  .eye-label-right { color: var(--color-right); font-weight: 600; }
-  .eye-label-left { color: var(--color-left); font-weight: 600; }
-  .age-estimate { display:flex; align-items:center; gap:6px; color:#0066cc; font-size:13px; font-weight:500; margin-top:6px; }
-  .chart-title { font-size:14px; font-weight:600; margin:0 0 8px; display:flex; align-items:center; gap:6px; }
-  .chart-title.right { color: var(--color-right); }
-  .chart-title.left { color: var(--color-left); }
-  .eye-fields { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+  
+  canvas { width:100%; height:200px; border: var(--glass-border); border-radius:12px; background: var(--canvas-bg); box-shadow: var(--canvas-shadow); margin-top: 8px; }
+  
+  .chart-stack { display:grid; grid-template-columns: 1fr; gap:20px; }
+  .info-toggle-btn { background: none; border: none; cursor: pointer; font-size: 18px; color: var(--text-muted); padding: 0 0 0 8px; line-height:1; transition: color 0.2s, transform 0.2s; vertical-align: middle; }
+  .info-toggle-btn:hover { color: var(--accent); transform: scale(1.15); }
+  .info-toggle-btn.active { color: var(--accent); }
+  .info-panel { overflow: hidden; transition: max-height 0.35s ease, opacity 0.35s ease; max-height: 0; opacity: 0; }
+  .info-panel.open { max-height: 600px; opacity: 1; }
+  .controls { display:grid; gap: 20px; }
+  .toggleRow { display:flex; flex-wrap:wrap; gap:16px; align-items:center; background: var(--pill-bg); padding: 16px; border-radius: 12px; border: var(--glass-border); }
+  
+  .smallInput { width: 180px; padding: 10px 14px; border: 1px solid rgba(255,255,255,0.1); border-radius:8px; font-size:14px; background: var(--input-bg); color: var(--text-main); transition: all 0.2s; }
+  .smallInput:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 12px rgba(0, 242, 254, 0.3); background: var(--input-focus-bg); }
+  
+  .badge { background: rgba(255,255,255,0.03); border: var(--glass-border); border-radius:8px; padding:12px; font-size:13px; color: var(--text-muted); margin-top: 12px; }
+  
+  .section-title { font-size:18px; font-weight:700; color: var(--heading-color); margin:0 0 16px; padding-bottom:12px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 8px; }
+  
+  .eye-card { border: var(--glass-border); border-radius:16px; padding:20px; position: relative; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+  .eye-card:hover { transform: translateY(-2px); box-shadow: var(--card-shadow); }
+  .eye-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+  .eye-card.right { background: var(--card-grad-right); }
+  .eye-card.right::before { background: var(--color-right); box-shadow: 0 0 20px var(--color-right); }
+  .eye-card.left { background: var(--card-grad-left); }
+  .eye-card.left::before { background: var(--color-left); box-shadow: 0 0 20px var(--color-left); }
+  
+  .eye-label-right { color: var(--color-right); font-weight: 700; text-shadow: 0 0 10px var(--shadow-right); }
+  .eye-label-left { color: var(--color-left); font-weight: 700; text-shadow: 0 0 10px var(--shadow-left); }
+  
+  .age-estimate { display:flex; align-items:center; gap:8px; color: var(--text-muted); font-size:13px; font-weight:500; margin-top:10px; background: var(--pill-bg); padding: 6px 12px; border-radius: 6px; display: inline-flex; }
+  
+  .chart-title { font-size:16px; font-weight:700; margin:0 0 12px; display:flex; align-items:center; gap:8px; letter-spacing: 0.5px; }
+  .chart-title.right { color: var(--color-right); text-shadow: 0 0 12px var(--shadow-right); }
+  .chart-title.left { color: var(--color-left); text-shadow: 0 0 12px var(--shadow-left); }
+  
+  .eye-fields { display:grid; grid-template-columns: 1fr 1fr; gap:20px; }
   @media (max-width: 500px) { .eye-fields { grid-template-columns: 1fr; } }
+  
+  /* Custom Checkbox */
+  .checkbox-wrapper { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  input[type=checkbox] { appearance: none; background: var(--checkbox-bg); border: 2px solid var(--checkbox-border); width: 22px !important; height: 22px !important; border-radius: 6px; cursor: pointer; position: relative; display: inline-block; vertical-align: middle; transition: all 0.2s; }
+  input[type=checkbox]:checked { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
+  input[type=checkbox]:checked::after { content: ''; position: absolute; width: 6px; height: 10px; border: solid var(--checkbox-check); border-width: 0 2px 2px 0; top: 40%; left: 50%; transform: translate(-50%, -50%) rotate(45deg); }
+  
+  /* Select styling */
+  select { appearance: none; background-image: var(--select-arrow); background-repeat: no-repeat; background-position: right 12px top 50%; background-size: 10px auto; }
+
+  .intro-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+  .intro-header:hover .info-toggle-btn { color: var(--accent); transform: scale(1.15); }
+  .intro-body { overflow: hidden; transition: max-height 0.35s ease, opacity 0.35s ease; max-height: 0; opacity: 0; }
+  .intro-body.open { max-height: 400px; opacity: 1; }
+
+  /* iOS-style toggle switch */
+  .switch-wrap { display:flex; align-items:center; justify-content:space-between; }
+  .toggle-switch { position:relative; width:50px; height:28px; flex-shrink:0; cursor:pointer; }
+  .toggle-switch input { opacity:0; width:0; height:0; position:absolute; }
+  .toggle-track { position:absolute; inset:0; border-radius:14px; background:var(--slider-track); border:1px solid var(--border-color); cursor:pointer; transition:background 0.2s, box-shadow 0.2s; }
+  .toggle-switch input:checked + .toggle-track { background:var(--accent); box-shadow:0 0 12px var(--accent-glow); border-color:var(--accent); }
+  .toggle-track::after { content:''; position:absolute; width:22px; height:22px; border-radius:50%; background:#fff; top:2px; left:2px; transition:transform 0.2s; box-shadow:0 1px 4px rgba(0,0,0,0.3); }
+  .toggle-switch input:checked + .toggle-track::after { transform:translateX(22px); }
+
+  /* Monovision collapsible panel */
+  .mono-panel { overflow:hidden; transition:max-height 0.3s ease, opacity 0.3s ease; max-height:0; opacity:0; }
+  .mono-panel.open { max-height:500px; opacity:1; }
+
+  /* Segment picker (dominant eye) */
+  .mono-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.8px; color:var(--text-muted); margin-bottom:8px; }
+  .seg-picker { display:flex; border-radius:10px; overflow:hidden; border:1px solid var(--border-color); background:var(--pill-bg); }
+  .seg-btn { flex:1; padding:8px 18px; background:none; border:none; color:var(--text-muted); font-size:14px; font-weight:500; cursor:pointer; transition:all 0.15s; white-space:nowrap; font-family:inherit; }
+  .seg-btn:hover:not(.active) { color:var(--text-main); }
+  .seg-btn.active { background:var(--accent); color:#000; font-weight:700; box-shadow:0 0 12px var(--accent-glow); }
+  [data-theme="light"] .seg-btn.active { color:#fff; }
+
+  /* Near target stepper */
+  .stepper-row { display:flex; align-items:center; gap:8px; }
+  .stepper-val { font-size:15px; font-weight:700; min-width:88px; padding:7px 12px; border-radius:8px; text-align:center; border:1px solid; display:inline-block; transition:color 0.2s, border-color 0.2s, background-color 0.2s; }
+  .stepper-btn { width:36px; height:36px; border-radius:8px; border:1px solid var(--border-color); background:var(--pill-bg); color:var(--text-main); font-size:22px; font-weight:400; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s; line-height:1; font-family:inherit; flex-shrink:0; }
+  .stepper-btn:hover { border-color:var(--accent); color:var(--accent); box-shadow:0 0 8px var(--accent-glow); background:rgba(0,242,254,0.08); }
+  [data-theme="light"] .stepper-btn:hover { background:rgba(2,132,199,0.08); }
+  .stepper-btn:active { transform:scale(0.92); }
+
+  /* Monovision info badge */
+  .mono-info-badge { display:flex; align-items:flex-start; gap:8px; padding:10px 12px; border-radius:10px; background:rgba(0,242,254,0.06); border:1px solid rgba(0,242,254,0.18); font-size:13px; color:var(--text-muted); margin-top:14px; line-height:1.5; }
+  [data-theme="light"] .mono-info-badge { background:rgba(2,132,199,0.06); border-color:rgba(2,132,199,0.2); }
+
+  /* Monovision eye summary */
+  .mono-eye-summary { padding:10px 14px; border-radius:12px; background:var(--pill-bg); border:var(--glass-border); margin-top:10px; font-size:13px; }
+  .mono-eye-row { display:flex; align-items:center; gap:6px; line-height:1.9; }
+  .eye-dot { width:8px; height:8px; border-radius:50%; display:inline-block; flex-shrink:0; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<h1>👁️ OptiSim</h1>
+<div class="header-row">
+  <h1><span>👁️</span> <span class="title-text">OptiSim</span></h1>
+  <button id="themeToggle" class="theme-toggle" aria-label="Bytt tema">☀️</button>
+</div>
 
 <div class="intro">
-  <strong>Hva er dette?</strong> Denne kalkulatoren simulerer hvordan øynene dine ser på ulike avstander etter refraktiv kirurgi (LASIK, PRK, SMILE).
-  Du kan justere <strong>brillestyrken</strong> (øyets naturlige brillestyrke), <strong>linseverdien</strong> (korreksjon via kirurgi/linser),
-  og <strong>akkommodasjon</strong> (øyets evne til å fokusere). Resultatet viser <strong>rest-defokus</strong>: hvor uskarp synet blir på ulike avstander.
-  <br><br>
-  <strong>Monovision/Presbyond:</strong> En teknikk der ett øye korrigeres for avstand (dominant) og det andre for nærarbeid,
-  nyttig for personer over 40–45 år som mister akkommodasjon (presbyopi).
+  <div class="intro-header" id="introHeader">
+    <strong>Hva er dette?</strong>
+    <button id="introInfoBtn" class="info-toggle-btn" aria-label="Vis/skjul informasjon" title="Vis informasjon">ⓘ</button>
+  </div>
+  <div class="intro-body" id="introBody">
+    <div style="margin-top:10px;">
+    Denne kalkulatoren simulerer hvordan øynene dine ser på ulike avstander etter refraktiv kirurgi (LASIK, PRK, SMILE).
+    Juster <strong>brillestyrken</strong> (R0), <strong>linseverdien</strong> (korreksjon via kirurgi/linser) og <strong>akkommodasjon</strong> (øyets evne til å fokusere på nært hold) — resultatet viser <strong>rest-defokus</strong> på nær, middels og fjern avstand.
+    <br><br>
+    <span style="color:var(--accent); font-size:13px;">&#10022;</span> <strong>Monovision/Presbyond:</strong> ett øye korrigeres for avstand (dominant øye) og det andre for nærarbeid — nyttig for personer over 40–45 år som gradvis mister akkommodasjon (presbyopi).
+    </div>
+  </div>
 </div>
 
 <div class="card">
@@ -124,29 +369,45 @@
 <div class="help">Øyets evne til å fokusere på nært hold (reduseres med alderen). Basert på Hofstetters gjennomsnitt.</div>
 </div>
 
-<div style="border-top:1px solid #e0e0e0; padding-top:16px; margin-top:8px;">
-<h3 style="font-size:14px; margin:0 0 10px; color:#333;">⚙️ Monovision / Presbyond</h3>
-<div class="toggleRow">
-<label style="display:flex; align-items:center; gap:6px;">
-  <input type="checkbox" id="monoToggle" style="width:auto; height:auto;"/>
-  <span>Aktiver Monovision / Presbyond</span>
-</label>
+<div style="border-top: 1px solid var(--border-color); padding-top:20px; margin-top:12px;">
+  <div class="switch-wrap">
+    <h3 style="font-size:16px; margin:0; color:var(--heading-color); display:flex; align-items:center; gap:8px;">👁️ Monovision / Presbyond</h3>
+    <label class="toggle-switch">
+      <input type="checkbox" id="monoToggle"/>
+      <span class="toggle-track"></span>
+    </label>
+  </div>
 
-<label>Dominant øye:
-<select id="dominantEye" class="smallInput">
-<option value="R" selected>Høyre</option>
-<option value="L">Venstre</option>
-</select>
-</label>
-
-<label>Mål residual for nærøye:
-<input type="number" id="nearResidualTarget" class="smallInput mono" value="-1.25" step="0.25"/>
-</label>
-
-<span id="eyeSummary" class="pill mono"></span>
-</div>
-
-<div class="badge hint mono" id="dominantCalc"></div>
+  <div id="monoPanel" class="mono-panel">
+    <div style="border-top:1px solid var(--border-color); margin:14px 0;"></div>
+    <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:flex-start;">
+      <div>
+        <div class="mono-label">Dominant øye</div>
+        <div class="seg-picker">
+          <button class="seg-btn active" data-val="R">Høyre</button>
+          <button class="seg-btn" data-val="L">Venstre</button>
+        </div>
+      </div>
+      <div>
+        <div class="mono-label">Mål nærøye</div>
+        <div class="stepper-row">
+          <button class="stepper-btn" id="nearMinus">−</button>
+          <span id="nearTargetVal" class="stepper-val mono"></span>
+          <button class="stepper-btn" id="nearPlus">+</button>
+        </div>
+      </div>
+    </div>
+    <input type="hidden" id="nearResidualTarget" value="-1.25"/>
+    <select id="dominantEye" style="display:none;"><option value="R" selected>Høyre</option><option value="L">Venstre</option></select>
+    <div class="mono-info-badge">
+      <span style="color:var(--accent); font-size:15px; flex-shrink:0; margin-top:1px;">ⓘ</span>
+      <span id="dominantCalc"></span>
+    </div>
+    <div class="mono-eye-summary mono">
+      <div id="eyeSummaryRows"></div>
+    </div>
+  </div>
+  <span id="eyeSummary" style="display:none;"></span>
 </div>
 
 </div>
@@ -171,19 +432,21 @@
 </div>
 
 <div class="card">
-<h2 class="section-title">📈 Visuell fremstilling av rest-defokus</h2>
-<div class="note hint">
+<h2 class="section-title">📈 Visuell fremstilling av rest-defokus <button id="chartInfoBtn" class="info-toggle-btn" aria-label="Vis/skjul informasjon" title="Vis informasjon">ⓘ</button></h2>
+<div id="chartInfoPanel" class="info-panel">
+<div class="note hint" style="margin-top:0;">
   <strong>Hvordan lese grafen:</strong> X-aksen viser rest-defokus i dioptrier (D).
   Verdier nær 0 D betyr skarp visjon. Jo større avstand fra 0, jo mer uskarp blir visningen.
   <br><br>
-  <strong>🔵 Lysblått område = DOF (Depth of Field):</strong> Det skraverte lysblå området viser fokusområdet hvor synet er akseptabelt skarpt.
+  <span style="display:inline-block; width:12px; height:12px; background:var(--accent); border-radius:50%; opacity:0.7; vertical-align:middle; margin-right:4px; box-shadow: 0 0 8px var(--accent-glow);"></span><strong>Fremhevet område = DOF (Depth of Field):</strong> Det skraverte området viser fokusområdet hvor synet er akseptabelt skarpt.
   <br>• <strong>Uten Monovision/Presbyond:</strong> ±0.50 D (standard fokusområde)
   <br>• <strong>Med Monovision/Presbyond:</strong> ±1.25 D (utvidet fokusområde)
   <br><br>
   <strong>Da finnes tre situasjoner:</strong>
-  <br>1️⃣ <strong>Myopi (−):</strong> Fokus foran netthinnen → bildet er uklart på avstand
-  <br>2️⃣ <strong>Hyperopi (+):</strong> Fokus bak netthinnen → bildet er uklart på avstand (uten akkommodasjon)
-  <br>3️⃣ <strong>Plano (0):</strong> Fokus på netthinnen → skarpt på avstand
+  <br>1️⃣ <strong style="color:var(--color-negative);">Myopi (−):</strong> Fokus foran netthinnen → bildet er uklart på avstand
+  <br>2️⃣ <strong style="color:var(--color-positive);">Hyperopi (+):</strong> Fokus bak netthinnen → bildet er uklart på avstand (uten akkommodasjon)
+  <br>3️⃣ <strong style="color:var(--color-positive);">Plano (0):</strong> Fokus på netthinnen → skarpt på avstand
+</div>
 </div>
 <!-- Charts: Right eye first, stacked vertically (consistent with iOS) -->
 <div class="chart-stack">
@@ -221,7 +484,7 @@ document.querySelectorAll('.slider-ticks').forEach(el => {
   const hLine = document.createElementNS(svgNS, 'line');
   hLine.setAttribute('x1', 0); hLine.setAttribute('y1', 0);
   hLine.setAttribute('x2', 100); hLine.setAttribute('y2', 0);
-  hLine.setAttribute('stroke', '#aaa'); hLine.setAttribute('stroke-width', '0.15');
+  hLine.setAttribute('stroke', 'var(--tick-line)'); hLine.setAttribute('stroke-width', '0.15');
   svg.appendChild(hLine);
 
   for (let i = 0; i <= totalSteps; i++) {
@@ -234,7 +497,7 @@ document.querySelectorAll('.slider-ticks').forEach(el => {
     const tick = document.createElementNS(svgNS, 'line');
     tick.setAttribute('x1', x); tick.setAttribute('y1', 0);
     tick.setAttribute('x2', x); tick.setAttribute('y2', h);
-    tick.setAttribute('stroke', '#aaa'); tick.setAttribute('stroke-width', '0.15');
+    tick.setAttribute('stroke', 'var(--tick-line)'); tick.setAttribute('stroke-width', '0.15');
     svg.appendChild(tick);
   }
 
@@ -269,6 +532,9 @@ const acc = document.getElementById("accommodation");
 const monoToggle = document.getElementById("monoToggle");
 const dominantEye = document.getElementById("dominantEye");
 const nearResidualTargetEl = document.getElementById("nearResidualTarget");
+const monoPanel = document.getElementById("monoPanel");
+const eyeSummaryRows = document.getElementById("eyeSummaryRows");
+const nearTargetValEl = document.getElementById("nearTargetVal");
 
 const rRightVal = document.getElementById("rRightVal");
 const rLeftVal = document.getElementById("rLeftVal");
@@ -287,6 +553,71 @@ const canvasLeft = document.getElementById("canvasLeft");
 const ctxRight = canvasRight.getContext("2d");
 const ctxLeft = canvasLeft.getContext("2d");
 const STORAGE_KEY = "synsmodellState.v1";
+
+const themeToggle = document.getElementById("themeToggle");
+
+// Theme logic
+function initTheme() {
+  const savedTheme = localStorage.getItem("optisim_theme") || "dark";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+  themeToggle.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+}
+
+themeToggle.addEventListener("click", () => {
+  let currentTheme = document.documentElement.getAttribute("data-theme");
+  let newTheme = currentTheme === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", newTheme);
+  localStorage.setItem("optisim_theme", newTheme);
+  themeToggle.textContent = newTheme === "dark" ? "☀️" : "🌙";
+  update(); // Redraw canvas with new theme colors
+});
+
+initTheme();
+
+// Intro panel toggle
+const introInfoBtn = document.getElementById("introInfoBtn");
+const introBody = document.getElementById("introBody");
+const introHeader = document.getElementById("introHeader");
+function toggleIntro() {
+  const isOpen = introBody.classList.toggle("open");
+  introInfoBtn.classList.toggle("active", isOpen);
+  introInfoBtn.title = isOpen ? "Skjul informasjon" : "Vis informasjon";
+}
+introHeader.addEventListener("click", toggleIntro);
+
+// Chart info panel toggle
+const chartInfoBtn = document.getElementById("chartInfoBtn");
+const chartInfoPanel = document.getElementById("chartInfoPanel");
+chartInfoBtn.addEventListener("click", () => {
+  const isOpen = chartInfoPanel.classList.toggle("open");
+  chartInfoBtn.classList.toggle("active", isOpen);
+  chartInfoBtn.title = isOpen ? "Skjul informasjon" : "Vis informasjon";
+});
+
+// Monovision panel show/hide
+function updateMonoPanel() {
+  monoPanel.classList.toggle("open", monoToggle.checked);
+}
+
+// Segment buttons (dominant eye)
+document.querySelectorAll(".seg-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".seg-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    dominantEye.value = btn.dataset.val;
+    update();
+  });
+});
+
+// Near target stepper buttons
+document.getElementById("nearMinus").addEventListener("click", () => {
+  const cur = parseFloat(nearResidualTargetEl.value);
+  if(cur > -4) { nearResidualTargetEl.value = Math.round((cur - 0.25) * 100) / 100; update(); }
+});
+document.getElementById("nearPlus").addEventListener("click", () => {
+  const cur = parseFloat(nearResidualTargetEl.value);
+  if(cur < 0) { nearResidualTargetEl.value = Math.round((cur + 0.25) * 100) / 100; update(); }
+});
 
 function saveState(){
   const state = {
@@ -320,7 +651,10 @@ function loadState(){
     if(state.lensLeft !== undefined) lensLeft.value = state.lensLeft;
     if(state.accommodation !== undefined) acc.value = state.accommodation;
     monoToggle.checked = Boolean(state.monoToggle);
-    if(state.dominantEye === "R" || state.dominantEye === "L") dominantEye.value = state.dominantEye;
+    if(state.dominantEye === "R" || state.dominantEye === "L") {
+      dominantEye.value = state.dominantEye;
+      document.querySelectorAll(".seg-btn").forEach(b => b.classList.toggle("active", b.dataset.val === state.dominantEye));
+    }
     if(state.nearResidualTarget !== undefined) nearResidualTargetEl.value = state.nearResidualTarget;
   }catch(_e){
   }
@@ -328,6 +662,12 @@ function loadState(){
 
 function fmt(x){return (x>0?"+":"")+x.toFixed(2)+" D";}
 function demand(d){return d===Infinity?0:1/d;}
+function signColor(v){return v>=0?'var(--color-positive)':'var(--color-negative)';}
+function signGlow(v){return v>=0?'var(--color-positive-glow)':'var(--color-negative-glow)';}
+function signBg(v){
+  const light = document.documentElement.getAttribute("data-theme")==="light";
+  return v>=0 ? (light?'rgba(22,163,74,0.12)':'rgba(0,230,118,0.12)') : (light?'rgba(220,38,38,0.12)':'rgba(255,23,68,0.12)');
+}
 
 function optimalLens(R0,d,A){
   const B = R0 + demand(d);
@@ -348,6 +688,7 @@ function estimatedAgeFromAcc(A) {
 }
 
 function update(){
+  updateMonoPanel();
 
   const RR0 = parseFloat(rRight.value);
   const RL0 = parseFloat(rLeft.value);
@@ -356,7 +697,11 @@ function update(){
   const A = parseFloat(acc.value);
 
   rRightVal.textContent = fmt(RR0);
+  rRightVal.style.color = signColor(RR0);
+  rRightVal.style.textShadow = '0 0 8px ' + signGlow(RR0);
   rLeftVal.textContent = fmt(RL0);
+  rLeftVal.style.color = signColor(RL0);
+  rLeftVal.style.textShadow = '0 0 8px ' + signGlow(RL0);
 
   // Update age estimate
   ageEstimate.textContent = "\u{1F464} Gjennomsnittsalder: ~" + estimatedAgeFromAcc(A) + " \u00E5r";
@@ -367,6 +712,12 @@ function update(){
 
   if(monoToggle.checked){
     const nearTarget = parseFloat(nearResidualTargetEl.value);
+
+    // Update near target stepper display
+    nearTargetValEl.textContent = fmt(nearTarget);
+    nearTargetValEl.style.color = signColor(nearTarget);
+    nearTargetValEl.style.borderColor = signColor(nearTarget);
+    nearTargetValEl.style.backgroundColor = signBg(nearTarget);
 
     if(dominantEye.value==="R"){
       dominant="H\u00F8yre";
@@ -381,7 +732,9 @@ function update(){
       lensLeft.style.opacity = "0.5";
       lensRight.style.opacity = "1";
 
-      eyeSummary.innerHTML = '<span class="eye-label-left">Venstre: '+fmt(RL)+' (n\u00E6r\u00F8ye)</span> \u00B7 <span class="eye-label-right">H\u00F8yre: '+fmt(RR)+' (dominant)</span>';
+      eyeSummaryRows.innerHTML =
+        '<div class="mono-eye-row"><span class="eye-dot" style="background:var(--color-left);"></span><span class="eye-label-left" style="font-weight:700;">Venstre:</span><span style="color:'+signColor(RL)+'; font-weight:700; margin-left:4px;">'+fmt(RL)+'</span><span style="color:var(--text-muted);"> \u00B7 n\u00E6r\u00F8ye</span></div>'+
+        '<div class="mono-eye-row"><span class="eye-dot" style="background:var(--color-right);"></span><span class="eye-label-right" style="font-weight:700;">H\u00F8yre:</span><span style="color:'+signColor(RR)+'; font-weight:700; margin-left:4px;">'+fmt(RR)+'</span><span style="color:var(--text-muted);"> \u00B7 dominant</span></div>';
     }else{
       dominant="Venstre";
       nearEye="H\u00F8yre";
@@ -395,10 +748,12 @@ function update(){
       lensRight.style.opacity = "0.5";
       lensLeft.style.opacity = "1";
 
-      eyeSummary.innerHTML = '<span class="eye-label-left">Venstre: '+fmt(RL)+' (dominant)</span> \u00B7 <span class="eye-label-right">H\u00F8yre: '+fmt(RR)+' (n\u00E6r\u00F8ye)</span>';
+      eyeSummaryRows.innerHTML =
+        '<div class="mono-eye-row"><span class="eye-dot" style="background:var(--color-left);"></span><span class="eye-label-left" style="font-weight:700;">Venstre:</span><span style="color:'+signColor(RL)+'; font-weight:700; margin-left:4px;">'+fmt(RL)+'</span><span style="color:var(--text-muted);"> \u00B7 dominant</span></div>'+
+        '<div class="mono-eye-row"><span class="eye-dot" style="background:var(--color-right);"></span><span class="eye-label-right" style="font-weight:700;">H\u00F8yre:</span><span style="color:'+signColor(RR)+'; font-weight:700; margin-left:4px;">'+fmt(RR)+'</span><span style="color:var(--text-muted);"> \u00B7 n\u00E6r\u00F8ye</span></div>';
     }
 
-    dominantCalc.textContent = "Dominant \u00F8ye kan justeres fritt. N\u00E6r\u00F8ye beregnes automatisk til "+fmt(nearTarget)+".";
+    dominantCalc.textContent = "Dominant \u00F8ye ("+dominant+") justeres fritt. N\u00E6r\u00F8ye ("+nearEye+") beregnes automatisk til "+fmt(nearTarget)+".";
   }else{
     lensR = parseFloat(lensRight.value);
     lensL = parseFloat(lensLeft.value);
@@ -410,13 +765,20 @@ function update(){
     lensRight.style.opacity = "1";
     lensLeft.style.opacity = "1";
 
-    eyeSummary.textContent = "Ingen monovision";
     dominantCalc.textContent = "";
   }
 
   lensRightVal.textContent = fmt(lensR);
+  lensRightVal.style.color = signColor(lensR);
+  lensRightVal.style.textShadow = '0 0 8px ' + signGlow(lensR);
   lensLeftVal.textContent = fmt(lensL);
+  lensLeftVal.style.color = signColor(lensL);
+  lensLeftVal.style.textShadow = '0 0 8px ' + signGlow(lensL);
   accVal.textContent = fmt(A);
+  accVal.style.color = signColor(A);
+  accVal.style.textShadow = '0 0 8px ' + signGlow(A);
+  accVal.style.borderColor = signColor(A);
+  accVal.style.backgroundColor = signBg(A);
 
   summary.textContent = "";
   resultTable.innerHTML="";
@@ -459,12 +821,19 @@ function update(){
       const tr=document.createElement("tr");
       const residualShown = dist.d===Infinity ? fmt(e.R) : "";
       const eyeColor = e.cssClass === "eye-label-right" ? "var(--color-right)" : "var(--color-left)";
+      const eyeShadow = e.cssClass === "eye-label-right" ? "var(--shadow-right)" : "var(--shadow-left)";
+      const residualColor = dist.d===Infinity ? signColor(e.R) : '';
+      const residualGlow = dist.d===Infinity ? signGlow(e.R) : '';
+      const residualCell = dist.d===Infinity
+        ? '<strong style="color:'+residualColor+'; text-shadow: 0 0 8px '+residualGlow+';">'+fmt(e.R)+'</strong>'
+        : '';
+
       tr.innerHTML=
-        '<td><strong style="color:'+eyeColor+'">'+e.label+'</strong></td>'+
-        '<td>'+residualShown+'</td>'+
+        '<td><strong style="color:'+eyeColor+'; text-shadow: 0 0 8px '+eyeShadow+';">'+e.label+'</strong></td>'+
+        '<td>'+residualCell+'</td>'+
         '<td>'+dist.name+'</td>'+
         '<td>'+fmt(demand(dist.d))+'</td>'+
-        '<td><strong style="font-size:15px; color:'+(Math.abs(rest)<0.5?'#0a7':'#c22')+';">'+fmt(rest)+'</strong></td>';
+        '<td><strong style="font-size:15px; color:'+signColor(rest)+'; text-shadow: 0 0 8px '+signGlow(rest)+';">'+fmt(rest)+'</strong></td>';
       resultTable.appendChild(tr);
     }
   }
@@ -474,8 +843,11 @@ function update(){
 }
 
 function drawGraph(data, isMonovision){
-  drawSingleEyeGraph(canvasRight, ctxRight, data.right, "#0a7", "H\u00F8yre", isMonovision);
-  drawSingleEyeGraph(canvasLeft, ctxLeft, data.left, "#c22", "Venstre", isMonovision);
+  const style = getComputedStyle(document.documentElement);
+  const colorRight = style.getPropertyValue('--color-right').trim() || "#00e5ff";
+  const colorLeft = style.getPropertyValue('--color-left').trim() || "#ff00ea";
+  drawSingleEyeGraph(canvasRight, ctxRight, data.right, colorRight, "H\u00F8yre", isMonovision);
+  drawSingleEyeGraph(canvasLeft, ctxLeft, data.left, colorLeft, "Venstre", isMonovision);
 }
 
 function drawSingleEyeGraph(canvas, ctx, dataPoints, color, eyeLabel, isMonovision){
@@ -488,6 +860,15 @@ function drawSingleEyeGraph(canvas, ctx, dataPoints, color, eyeLabel, isMonovisi
   canvas.height=H;
 
   ctx.clearRect(0,0,W,H);
+
+  const isLight = document.documentElement.getAttribute("data-theme") === "light";
+  const dofFill = isLight ? "rgba(2, 132, 199, 0.1)" : "rgba(0, 242, 254, 0.1)";
+  const dofStroke = isLight ? "rgba(2, 132, 199, 0.4)" : "rgba(0, 242, 254, 0.4)";
+  const zeroLine = isLight ? "#94a3b8" : "#475569";
+  const textMuted = isLight ? "#64748b" : "#94a3b8";
+  const gridLine = isLight ? "rgba(0,0,0,0.05)" : "#1e293b";
+  const yAxisText = isLight ? "#334155" : "#cbd5e1";
+  const valText = isLight ? "#0f172a" : "#fff";
 
   const margin={top:20, right:30, bottom:50, left:90};
   const plotW = W - margin.left - margin.right;
@@ -506,13 +887,13 @@ function drawSingleEyeGraph(canvas, ctx, dataPoints, color, eyeLabel, isMonovisi
 
   // DOF zone
   const dofRange = isMonovision ? 1.25 : 0.50;
-  ctx.fillStyle = "rgba(173, 216, 230, 0.25)";
+  ctx.fillStyle = dofFill;
   const dofLeft = xToPx(-dofRange);
   const dofRight = xToPx(dofRange);
   ctx.fillRect(dofLeft, margin.top, dofRight - dofLeft, plotH);
 
   // DOF dashed borders
-  ctx.strokeStyle = "rgba(100, 149, 237, 0.4)";
+  ctx.strokeStyle = dofStroke;
   ctx.lineWidth = 1;
   ctx.setLineDash([4, 4]);
   ctx.beginPath();
@@ -527,7 +908,7 @@ function drawSingleEyeGraph(canvas, ctx, dataPoints, color, eyeLabel, isMonovisi
 
   // Zero line
   const zeroX = xToPx(0);
-  ctx.strokeStyle="#999";
+  ctx.strokeStyle = zeroLine;
   ctx.lineWidth=2;
   ctx.beginPath();
   ctx.moveTo(zeroX, margin.top);
@@ -537,20 +918,20 @@ function drawSingleEyeGraph(canvas, ctx, dataPoints, color, eyeLabel, isMonovisi
   // Zone labels
   ctx.font="12px system-ui";
   ctx.textAlign="center";
-  ctx.fillStyle="#555";
+  ctx.fillStyle = textMuted;
   ctx.fillText("Myopi (\u2212)", xToPx(-3), margin.top - 4);
   ctx.fillText("Plano (0)", xToPx(0), margin.top - 4);
   ctx.fillText("Hyperopi (+)", xToPx(3), margin.top - 4);
 
   // X-axis scale
-  ctx.fillStyle="#666";
+  ctx.fillStyle = textMuted;
   ctx.font="11px system-ui";
   ctx.textAlign="center";
   ctx.lineWidth=1;
   for(let i=minX; i<=maxX; i+=2){
     const x = xToPx(i);
     ctx.fillText((i>0?"+":"")+i+" D", x, H-margin.bottom+20);
-    ctx.strokeStyle="#f0f0f0";
+    ctx.strokeStyle = gridLine;
     ctx.beginPath();
     ctx.moveTo(x, margin.top);
     ctx.lineTo(x, H-margin.bottom);
@@ -559,7 +940,7 @@ function drawSingleEyeGraph(canvas, ctx, dataPoints, color, eyeLabel, isMonovisi
 
   // Y-axis labels
   ctx.textAlign="right";
-  ctx.fillStyle="#444";
+  ctx.fillStyle = yAxisText;
   ctx.font="12px system-ui";
   Object.entries(yPositions).forEach(([label, y])=>{
     ctx.fillText(label, margin.left-10, y+4);
@@ -569,6 +950,8 @@ function drawSingleEyeGraph(canvas, ctx, dataPoints, color, eyeLabel, isMonovisi
   if(dataPoints.length >= 2){
     ctx.strokeStyle=color;
     ctx.lineWidth=3;
+    ctx.shadowColor = color;
+    ctx.shadowBlur = isLight ? 4 : 10;
     ctx.beginPath();
 
     dataPoints.forEach((pt, idx)=>{
@@ -578,27 +961,34 @@ function drawSingleEyeGraph(canvas, ctx, dataPoints, color, eyeLabel, isMonovisi
       else ctx.lineTo(x, y);
     });
     ctx.stroke();
+    ctx.shadowBlur = 0; // reset shadow for points
 
     // Draw points with value labels
     dataPoints.forEach(pt=>{
       const x = xToPx(pt.value);
       const y = yPositions[pt.dist];
       ctx.fillStyle=color;
+      ctx.shadowColor = color;
+      ctx.shadowBlur = isLight ? 6 : 15;
       ctx.beginPath();
       ctx.arc(x, y, 5, 0, Math.PI*2);
       ctx.fill();
+      ctx.shadowBlur = 0;
 
       // Value annotation
-      ctx.font="11px system-ui";
+      ctx.font="bold 11px system-ui";
       ctx.textAlign = pt.value >= 0 ? "left" : "right";
-      ctx.fillStyle = "#333";
+      const annotColor = pt.value >= 0
+        ? (isLight ? '#16a34a' : '#00e676')
+        : (isLight ? '#dc2626' : '#ff1744');
+      ctx.fillStyle = annotColor;
       const offset = pt.value >= 0 ? 10 : -10;
       ctx.fillText(fmt(pt.value), x + offset, y + 4);
     });
   }
 }
 
-[rRight,rLeft,lensRight,lensLeft,acc,monoToggle,dominantEye,nearResidualTargetEl].forEach(el=>{
+[rRight,rLeft,lensRight,lensLeft,acc,monoToggle].forEach(el=>{
   el.addEventListener("input",update);
   el.addEventListener("change",update);
 });

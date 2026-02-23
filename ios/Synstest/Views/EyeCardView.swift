@@ -1,53 +1,45 @@
 import SwiftUI
 
 private struct SliderTickMarks: View {
+    var color: Color = AppTheme.accent
     private let ticks: [Int] = [-8, -6, -4, -2, 0, 2, 4, 6, 8]
 
     var body: some View {
         VStack(spacing: 0) {
-            // Horizontal rule with vertical tick lines
             GeometryReader { geo in
-                // Match the slider's internal thumb inset
                 let inset: CGFloat = 11
                 let usable = geo.size.width - inset * 2
-                // Total steps from -8 to +8 in steps of 0.5 = 32
                 let totalSteps = 32
                 let bottomY: CGFloat = geo.size.height
 
                 Path { path in
-                    // Horizontal line
                     path.move(to: CGPoint(x: inset, y: bottomY))
                     path.addLine(to: CGPoint(x: inset + usable, y: bottomY))
 
-                    // Vertical ticks for every 0.5 from -8 to +8
                     for i in 0...totalSteps {
                         let value = -8.0 + Double(i) * 0.5
                         let x = inset + usable * CGFloat(i) / CGFloat(totalSteps)
                         let tickHeight: CGFloat
                         if value.truncatingRemainder(dividingBy: 2) == 0 {
-                            // Labeled ticks (even integers): tallest
                             tickHeight = 10
                         } else if value.truncatingRemainder(dividingBy: 1) == 0 {
-                            // Odd integers: medium
                             tickHeight = 6
                         } else {
-                            // Half steps (0.5): shortest
                             tickHeight = 3
                         }
                         path.move(to: CGPoint(x: x, y: bottomY))
                         path.addLine(to: CGPoint(x: x, y: bottomY - tickHeight))
                     }
                 }
-                .stroke(Color.secondary.opacity(0.5), lineWidth: 0.5)
+                .stroke(color.opacity(0.35), lineWidth: 0.5)
             }
             .frame(height: 11)
 
-            // Labels
             HStack {
                 ForEach(ticks, id: \.self) { value in
                     Text(value > 0 ? "+\(value)" : "\(value)")
                         .font(.system(size: 9, weight: value == 0 ? .semibold : .regular).monospacedDigit())
-                        .foregroundStyle(value == 0 ? .primary : .secondary)
+                        .foregroundStyle(value == 0 ? color : .secondary)
                     if value != ticks.last {
                         Spacer()
                     }
@@ -66,78 +58,140 @@ struct EyeCardView: View {
     @Binding var r0: Double
     @Binding var lens: Double
     let isLensDisabled: Bool
-    let effectiveLens: Double  // actual lens value (may be auto-calculated)
+    let effectiveLens: Double
 
     @Environment(SynsViewModel.self) private var vm
+    @Environment(\.colorScheme) private var cs
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            Label(title, systemImage: icon)
-                .font(.headline)
-                .foregroundStyle(tintColor)
+        VStack(alignment: .leading, spacing: 16) {
+            // Header
+            HStack {
+                Label(title, systemImage: icon)
+                    .font(.headline.weight(.bold))
+                    .foregroundStyle(tintColor)
+                Spacer()
+            }
+
+            Divider().overlay(tintColor.opacity(0.2))
 
             // R0 slider
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text("Brillestyrke (R0)")
-                        .font(.subheadline.weight(.medium))
-                    Spacer()
-                    Text(r0.diopterString)
-                        .font(.subheadline.monospacedDigit())
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 3)
-                        .background(.fill.tertiary, in: Capsule())
-                }
-                Slider(value: $r0, in: -8...8, step: 0.25)
-                SliderTickMarks()
+            sliderRow(
+                label: "Brillestyrke (R0)",
+                hint: "Øyets naturlige styrke  (+  langsynthet  ·  −  nærsynt)",
+                value: $r0,
+                displayValue: r0,
+                disabled: false
+            )
 
-                Text("Øyets naturlige brillestyrke (+ = langsynthet, − = nærsynt)")
+            // Lens slider
+            lensRow
+        }
+        .padding(16)
+        // Card background
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(
+                    AnyShapeStyle(
+                        LinearGradient(
+                            colors: [
+                                AppTheme.cardBg,
+                                tintColor.opacity(cs == .dark ? 0.06 : 0.04)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                )
+        )
+        // Border
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .strokeBorder(tintColor.opacity(cs == .dark ? 0.40 : 0.22), lineWidth: 1)
+        )
+        // Left colour bar
+        .overlay(alignment: .leading) {
+            RoundedRectangle(cornerRadius: 16)
+                .frame(width: 4)
+                .foregroundStyle(
+                    LinearGradient(
+                        colors: [tintColor, tintColor.opacity(0.4)],
+                        startPoint: .top, endPoint: .bottom
+                    )
+                )
+        }
+    }
+
+    // MARK: - Helpers
+
+    @ViewBuilder
+    private func sliderRow(
+        label: String,
+        hint: String,
+        value: Binding<Double>,
+        displayValue: Double,
+        disabled: Bool
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Text(label)
+                    .font(.subheadline.weight(.medium))
+                Spacer()
+                Text(displayValue.diopterString)
+                    .font(.subheadline.monospacedDigit())
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 3)
+                    .background(AppTheme.signColor(for: displayValue).opacity(0.15), in: Capsule())
+                    .foregroundStyle(AppTheme.signColor(for: displayValue))
+            }
+            Slider(value: disabled ? .constant(displayValue) : value, in: -8...8, step: 0.25)
+                .tint(disabled ? .secondary : tintColor)
+                .disabled(disabled)
+            SliderTickMarks(color: disabled ? .secondary : tintColor)
+            Text(hint)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    @ViewBuilder
+    private var lensRow: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Text("Linseverdi (Korreksjon)")
+                    .font(.subheadline.weight(.medium))
+                Spacer()
+                Text(effectiveLens.diopterString)
+                    .font(.subheadline.monospacedDigit())
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 3)
+                    .background(
+                        AppTheme.signColor(for: effectiveLens).opacity(0.15),
+                        in: Capsule()
+                    )
+                    .foregroundStyle(AppTheme.signColor(for: effectiveLens))
+            }
+
+            if isLensDisabled {
+                Slider(value: .constant(effectiveLens), in: -8...8, step: 0.25)
+                    .disabled(true)
+                    .tint(.secondary)
+                SliderTickMarks(color: .secondary)
+                HStack(spacing: 4) {
+                    Image(systemName: "lock.fill").font(.caption2)
+                    Text("Beregnes automatisk for nærøye ved Monovision")
+                }
+                .font(.caption)
+                .foregroundStyle(.orange)
+            } else {
+                Slider(value: $lens, in: -8...8, step: 0.25)
+                    .tint(tintColor)
+                SliderTickMarks(color: tintColor)
+                Text("Korreksjon via kirurgi/linser")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
-
-            // Lens slider
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text("Linseverdi (Korreksjon)")
-                        .font(.subheadline.weight(.medium))
-                    Spacer()
-                    Text(effectiveLens.diopterString)
-                        .font(.subheadline.monospacedDigit())
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 3)
-                        .background(.fill.tertiary, in: Capsule())
-                }
-
-                if isLensDisabled {
-                    Slider(value: .constant(effectiveLens), in: -8...8, step: 0.25)
-                        .disabled(true)
-                        .tint(.secondary)
-                    SliderTickMarks()
-
-                    Text("Beregnes automatisk for nærøye ved Monovision")
-                        .font(.caption)
-                        .foregroundStyle(.orange)
-                } else {
-                    Slider(value: $lens, in: -8...8, step: 0.25)
-                    SliderTickMarks()
-
-                    Text("Korreksjon via kirurgi/linser")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-            }
-        }
-        .padding()
-        .background(tintColor.opacity(0.06), in: RoundedRectangle(cornerRadius: 12))
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .strokeBorder(tintColor.opacity(0.2), lineWidth: 1)
-        )
-        .overlay(alignment: .leading) {
-            RoundedRectangle(cornerRadius: 12)
-                .frame(width: 3)
-                .foregroundStyle(tintColor)
         }
     }
 }
+

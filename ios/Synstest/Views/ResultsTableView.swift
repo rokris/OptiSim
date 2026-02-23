@@ -4,63 +4,73 @@ struct ResultsTableView: View {
     let leftResults: [DistanceResult]
     let rightResults: [DistanceResult]
 
+    @Environment(\.colorScheme) private var cs
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Label("Resultater", systemImage: "tablecells")
+            Label("Resultater", systemImage: "tablecells.fill")
                 .font(.headline)
+                .foregroundStyle(AppTheme.accent)
 
             // Table header
             HStack(spacing: 0) {
-                headerCell("Øye", width: .flexible)
-                headerCell("Residual", width: .flexible)
-                headerCell("Avstand", width: .flexible)
-                headerCell("Krav (1/d)", width: .flexible)
-                headerCell("Rest-defokus", width: .flexible)
+                headerCell("Øye")
+                headerCell("Residual")
+                headerCell("Avstand")
+                headerCell("Krav")
+                headerCell("Rest-def")
             }
+            .padding(.horizontal, 10)
             .padding(.vertical, 8)
-            .background(Color(.systemGray6))
+            .background(
+                cs == .dark
+                    ? AnyShapeStyle(
+                        LinearGradient(
+                            colors: [AppTheme.accent.opacity(0.20), AppTheme.accent.opacity(0.08)],
+                            startPoint: .leading, endPoint: .trailing
+                        )
+                    )
+                    : AnyShapeStyle(AppTheme.accent.opacity(0.10))
+            )
             .clipShape(RoundedRectangle(cornerRadius: 8))
 
             // Right eye rows
-            ForEach(Array(rightResults.enumerated()), id: \.offset) { index, result in
-                resultRow(
-                    eye: "Høyre",
-                    showResidual: index == 0,
-                    result: result
-                )
+            VStack(spacing: 0) {
+                ForEach(Array(rightResults.enumerated()), id: \.offset) { index, result in
+                    resultRow(eye: "Høyre", showResidual: index == 0, result: result, rowIndex: index)
+                }
             }
 
-            Divider()
+            // Divider between eyes
+            HStack(spacing: 6) {
+                Rectangle().fill(AppTheme.leftEye.opacity(0.4)).frame(height: 1)
+            }
 
             // Left eye rows
-            ForEach(Array(leftResults.enumerated()), id: \.offset) { index, result in
-                resultRow(
-                    eye: "Venstre",
-                    showResidual: index == 0,
-                    result: result
-                )
+            VStack(spacing: 0) {
+                ForEach(Array(leftResults.enumerated()), id: \.offset) { index, result in
+                    resultRow(eye: "Venstre", showResidual: index == 0, result: result, rowIndex: index)
+                }
             }
         }
-        .padding()
-        .background(.background, in: RoundedRectangle(cornerRadius: 12))
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(.quaternary, lineWidth: 1)
-        )
+        .padding(16)
+        .modernCard(tint: AppTheme.accent)
     }
 
     // MARK: - Subviews
 
-    private func headerCell(_ text: String, width: Flexibility) -> some View {
+    private func headerCell(_ text: String) -> some View {
         Text(text)
             .font(.caption2.weight(.semibold))
             .textCase(.uppercase)
-            .foregroundStyle(.secondary)
+            .foregroundStyle(AppTheme.accent)
+            .tracking(0.4)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private func resultRow(eye: String, showResidual: Bool, result: DistanceResult) -> some View {
-        let eyeColor: Color = eye == "Høyre" ? .green : .red
+    private func resultRow(eye: String, showResidual: Bool, result: DistanceResult, rowIndex: Int) -> some View {
+        let eyeColor: Color = eye == "Høyre" ? AppTheme.rightEye : AppTheme.leftEye
+        let defColor: Color = AppTheme.signColor(for: result.restDefocus)
 
         return HStack(spacing: 0) {
             Text(eye)
@@ -70,25 +80,32 @@ struct ResultsTableView: View {
 
             Text(showResidual ? result.residual.diopterString : "")
                 .font(.caption.monospacedDigit())
+                .foregroundStyle(showResidual ? AppTheme.signColor(for: result.residual) : .clear)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             Text(result.distance.name)
                 .font(.caption)
+                .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             Text(result.demand.diopterString)
                 .font(.caption.monospacedDigit())
+                .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             Text(result.restDefocus.diopterString)
                 .font(.callout.weight(.bold).monospacedDigit())
-                .foregroundStyle(abs(result.restDefocus) < 0.5 ? .green : .red)
+                .foregroundStyle(defColor)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(.vertical, 4)
-    }
-
-    private enum Flexibility {
-        case flexible
+        .padding(.horizontal, 10)
+        .padding(.vertical, 7)
+        .background(
+            rowIndex % 2 == 0
+                ? eyeColor.opacity(cs == .dark ? 0.04 : 0.03)
+                : Color.clear
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 5))
     }
 }
+
