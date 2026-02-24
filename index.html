@@ -1030,6 +1030,11 @@ function drawSingleEyeGraph(canvas, ctx, dataPoints, color, eyeLabel, isMonovisi
 loadState();
 update();
 
+// Redraw canvases when container size changes (responsive resize)
+const resizeObserver = new ResizeObserver(() => { update(); });
+resizeObserver.observe(canvasRight.parentElement);
+resizeObserver.observe(canvasLeft.parentElement);
+
 </script>
 </body>
 </html>
